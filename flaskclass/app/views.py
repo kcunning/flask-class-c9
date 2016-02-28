@@ -1,3 +1,5 @@
+import json, urllib
+
 from app import app
 from flask import render_template, request
 
@@ -46,3 +48,11 @@ def get_nums():
 		return render_template('get_lucky.html', form=form)
 	if request.method == 'GET':	
 		return render_template('get_lucky.html', form=form)
+
+@app.route('/spotify/')
+def spotify():
+    url = "https://api.spotify.com/v1/search?q=elvis*&type=artist"
+    response = urllib.urlopen(url)
+    data = json.loads(response.read())
+    
+    return render_template('spotify_base.html', data=data)
